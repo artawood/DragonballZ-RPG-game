@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Dashboard | Game Characters</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/admin-dashboard.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="display-3">Admin Dashboard</h1>
+            <h2>Manage Game Characters</h2>
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Add Character</h2>
+            </div>
+            <div class="card-body">
+
+                <form>
+                    <div class="form-group">
+                        <label for="Character Name">Character Name</label>
+                        <input type="text" class="form-control" id="character-name" placeholder="Goku">
+                    </div>
+                    <div class="form-group">
+                        <label for="Power">Power Level</label>
+                        <input type="text" class="form-control" id="power" placeholder="20000">
+                    </div>
+                    <div class="form-group">
+                        <label for="Health">Health</label>
+                        <input type="text" class="form-control" id="health" placeholder="200000">
+                    </div>
+                    <div class="form-group">
+                        <label for="Image URL">Character Image</label>
+                        <input type="text" class="form-control" id="character-image" placeholder="image URL">
+                    </div>
+                    <button class="submit btn btn-primary mb-2">
+                        </i>Add Character</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Current Characters</h3>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Character Name</th>
+                            <th scope="col">Power</th>
+                            <th scope="col">Health</th>
+                            <th scope="col">Character Image</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Jquery 
+    ===================================================================================-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+     <!-- <script type="text/javascript" src="assets/js/scrapper.js"></script> -->
+
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyA67vaw_Xc2GfxcVRKQc-Do-nMdD1SqC2U",
+            authDomain: "dragonball-z-rpg-game.firebaseapp.com",
+            databaseURL: "https://dragonball-z-rpg-game.firebaseio.com",
+            projectId: "dragonball-z-rpg-game",
+            storageBucket: "dragonball-z-rpg-game.appspot.com",
+            messagingSenderId: "987151345140"
+        };
+        firebase.initializeApp(config);
+        // Create a variable to reference the database.
+        var database = firebase.database();
+        var charName;
+        var power;
+        var health;
+        var charImage;
+
+        function showData() { database.ref("characters").once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    console.log(snapshot);
+                    var childData = childSnapshot.val();
+                    var table = $(".table");
+                    var row = $("<tr>");
+                    var td = $("<td>");
+                    var img = $("<img>").attr("src", childData.charImage).addClass("charImage");
+
+                    var charName = $("<td>").text(childData.charName);
+                    var power = $("<td>").text(childData.power);
+                    var health = $("<td>").text(childData.health);
+                    var charImage = $("<td>").append(img);
+                    row.append(charName, power, health, charImage);
+                    table.append(row);
+                });
+            });
+        }
+
+        showData();
+
+        $(".submit").on("click", function (event) {
+            // Initial Values
+            charName = $("#character-name").val().trim(); //character-name
+            power = $("#power").val().trim(); //power
+            health = $("#health").val().trim(); //health
+            charImage = $("#character-image").val().trim(); //character-imate
+
+            // Add Characters to the database
+            database.ref("characters/" + charName).set({
+                charName: charName,
+                power: power,
+                health: health,
+                charImage: charImage,
+                dateAdded: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            showData();
+        });
+    </script>
+</body>
+
+</html>

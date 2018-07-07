@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Player Module</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/player.css" />
+    
+    <!-- Image Picker CSS-->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/image-picker.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="display-3">Player Module</h1>
+            <h2>This is a test for 2 Player validation</h2>
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Player Information</h2>
+            </div>
+            <div class="card-body">
+
+                <form>
+                    <div class="form-group">
+                        <label for="Player's Name">Player's Name</label>
+                        <input type="text" class="form-control" id="player-name" placeholder="Player Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="Select Character">Select Character</label>
+                        <div id="char-selection" class="row"></div>
+                        <label for="Character Selected">Character Selected</label>
+                        <h4 id="char-select"></h4>
+                    </div>
+                    <button class="submit btn btn-primary mb-2">Submit</button>
+                    <button class="start-over btn btn-primary mb-2">Start Over</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Current Players</h3>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Player's Name</th>
+                            <th scope="col">Player's Number</th>
+                            <th scope="col">Player's Character</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Jquery 
+    ===================================================================================-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Image Picker -->
+    <script type="text/javascript" src="assets/js/image-picker.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script>
+    $(document).ready(() => {
+
+        //Functions
+        function showData() {
+            database.ref("players").once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                var table = $(".table");
+                var row = $("<tr>");
+                var td = $("<td>");
+
+                var displayPlayerName = $("<td>").text(childData.playerName);
+                var displayPlayerNum = $("<td>").text(childData.player);
+                var displayCharSelected = $("<td>").text(childData.charSelected);
+                row.append(displayPlayerName, displayPlayerNum, displayCharSelected);
+                table.append(row);
+                });
+            });
+        }
+
+        function playerLimit() {
+            var playerCount = database.ref().child("playerCount");
+            console.log(playerCount);
+        }
+
+        function renderChar() {
+            database.ref("characters").once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    var childData = childSnapshot.val();
+                    var img = $("<img>");
+                    img.attr("src", childData.charThumbnail);
+                    img.attr("data-name", childData.charName);
+                    img.addClass("character-thumbnail");
+                    $("#char-selection").append(img);
+                });
+            });
+        }
+        
+        //Generates GameID Number to track games and chats
+        // var gameID = "";
+        // function generateGameID() {
+        //     for (var i = 0; i < 8; i++) {
+        //         var randomNumber = Math.floor(Math.random() * 8) + 1;
+        //         gameID = randomNumber + gameID;
+        //     }
+        //     console.log(gameID);
+        // }
+        
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyA67vaw_Xc2GfxcVRKQc-Do-nMdD1SqC2U",
+            authDomain: "dragonball-z-rpg-game.firebaseapp.com",
+            databaseURL: "https://dragonball-z-rpg-game.firebaseio.com",
+            projectId: "dragonball-z-rpg-game",
+            storageBucket: "dragonball-z-rpg-game.appspot.com",
+            messagingSenderId: "987151345140"
+        };
+        firebase.initializeApp(config);
+        // Variables to reference the database.
+        var database = firebase.database();
+        var playerName;
+
+        //Retrieve Number of Players from Firebase
+        database.ref().on("value", function (snapshot) {
+            var data = snapshot.val();
+            var updatedPlayerCount = parseInt(data.playerCount.total);
+            console.log(updatedPlayerCount);
+
+            //Select character
+            $(document).on("click", ".character-thumbnail", function() {
+                $(this).toggleClass("selected-character");
+                var charSelected = $(this).attr("data-name");
+                console.log(charSelected);
+                $('#char-select').text(charSelected);
+
+                //Submit Player
+                $(".submit").on("click", function (event) {
+                var playerName = $("#player-name").val().trim(); //player-name
+                if (updatedPlayerCount == 2) {
+                    //validate if there are already two players
+                    alert("Player limit reached!");
+                    } else if (updatedPlayerCount == 0) {
+                        //validation for identifying player one
+                        updatedPlayerCount++
+                        // generateGameID();
+                        // Code for handling the push
+                        database.ref("players").set({
+                            player: "one",
+                            playerName: playerName,
+                            charSelected: charSelected,
+                            dateAdded: firebase.database.ServerValue.TIMESTAMP
+                        });
+
+                    database.ref("playerCount").set({
+                        total : updatedPlayerCount
+                    })
+                    alert("Waiting for one more player!");
+
+                    //Set Interval for waiting for the second player
+                        //Refresh every 10 seconds
+                        //If updatedPlayercount = 2, clearInterval
+                        //Else continue interval
+
+                    } else if (updatedPlayerCount == 1) {
+                    //validation for identifying player two
+                    updatedPlayerCount++
+
+                    // Code for handling the push
+                    database.ref("players").push({
+                        player: "two",
+                        playerName: playerName,
+                        charSelected: charSelected,
+                        dateAdded: firebase.database.ServerValue.TIMESTAMP
+                    });
+
+                    database.ref("playerCount").set({
+                        total : updatedPlayerCount
+                    })
+                    alert("Let's get the game started!");
+                    }
+                });
+            }); 
+        })
+
+        showData();
+        playerLimit();
+        renderChar();
+    });
+    </script>
+</body>
+
+</html>

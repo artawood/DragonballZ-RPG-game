@@ -1,0 +1,21 @@
+{
+  "characters" : {
+    "-LGRujhzDIx-Ir3Xye2r" : {
+      "charImage" : "https://firebasestorage.googleapis.com/v0/b/dragonball-z-rpg-game.appspot.com/o/images%2Fcharacter-images%2Fgoku.png?alt=media&token=702ca652-ffaf-42e0-a2eb-22b09095f669",
+      "charName" : "Goku",
+      "dateAdded" : 1530567261125,
+      "health" : "200000",
+      "power" : "20000"
+    },
+    "-LGRv78IuacmJBVcqTJV" : {
+      "charImage" : "https://firebasestorage.googleapis.com/v0/b/dragonball-z-rpg-game.appspot.com/o/images%2Fcharacter-images%2Ffrieza.png?alt=media&token=00c356f1-cc2a-4e59-98c6-bf4246d4c33d",
+      "charName" : "Freiza",
+      "dateAdded" : 1530567361177,
+      "health" : "500000",
+      "power" : "50000"
+    }
+  },
+  "playerCount" {
+    "playerCount" : 0
+  }
+}

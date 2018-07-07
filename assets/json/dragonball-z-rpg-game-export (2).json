@@ -1,0 +1,23 @@
+{
+  "characters" : {
+    "Frieza" : {
+      "charImage" : "https://firebasestorage.googleapis.com/v0/b/dragonball-z-rpg-game.appspot.com/o/images%2Fcharacter-images%2Ffrieza.png?alt=media&token=00c356f1-cc2a-4e59-98c6-bf4246d4c33d",
+      "charName" : "Frieza",
+      "charThumbnail" : "https://firebasestorage.googleapis.com/v0/b/dragonball-z-rpg-game.appspot.com/o/images%2Fcharacter-images%2Ffrieza-thumbnail.png?alt=media&token=092457f4-8903-4742-9cbb-57e12fee033f",
+      "dateAdded" : 1530858330782,
+      "health" : "500000",
+      "power" : "50000"
+    },
+    "Goku" : {
+      "charImage" : "https://firebasestorage.googleapis.com/v0/b/dragonball-z-rpg-game.appspot.com/o/images%2Fcharacter-images%2Fgoku.png?alt=media&token=702ca652-ffaf-42e0-a2eb-22b09095f669",
+      "charName" : "Goku",
+      "charThumbnail" : "https://firebasestorage.googleapis.com/v0/b/dragonball-z-rpg-game.appspot.com/o/images%2Fcharacter-images%2Fgoku-thumbnail.png?alt=media&token=984cf4ae-ebc0-4125-94f6-661023c21377",
+      "dateAdded" : 1530858237115,
+      "health" : "200000",
+      "power" : "20000"
+    }
+  },
+  "playerCount" : {
+    "total" : 0
+  }
+}
