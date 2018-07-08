@@ -86,7 +86,6 @@ const displayOnScreen = () => {
         var data = snapshot.val();
         
         var playerTurn = data.playerCount.turn;
-        console.log(playerTurn);
 
         if (playerTurn === "one") {
             
@@ -95,6 +94,12 @@ const displayOnScreen = () => {
             gameMessage.text("Player Two's turn to attack!");
         } else if (playerTurn === "none") {
             gameMessage.text("Click on Start Game to enter your name and select your characters!");
+        }
+
+        var updatedPlayerCount = parseInt(data.playerCount.total);
+        console.log (updatedPlayerCount);
+        if (updatedPlayerCount === 2 ) {
+            $('#start-button').hide();
         }
 
         //Game Result
