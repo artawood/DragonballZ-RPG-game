@@ -84,6 +84,27 @@
         </div>
       </div>
 
+      <!-- Game Over Modal -->
+      <div class="modal fade" id="gameOver" tabindex="-1" role="dialog" aria-labelledby="gameOver" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Game Over</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 id="result"></h2>
+            </div>
+            <div class="modal-footer">
+                <h3>Play Again?</h3>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="restart-button" class="btn btn-warning" data-dismiss="modal">Restart Game</button>
+            </div>
+            </div>
+        </div>
+        </div>
     <!-- Core JS-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
