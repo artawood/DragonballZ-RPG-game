@@ -101,6 +101,11 @@ const displayOnScreen = () => {
         if (updatedPlayerCount === 2 ) {
             $('#start-button').hide();
         }
+        //TODO: Add conditional
+            //If updatedPlayerCount === 1 && sessionStorage.getItem("player") === "one"
+                //SetTimeout to display "Waiting for 2nd Player" and refresh after 10 seconds
+            //Else if updatedPlayerCount === 2 && sessionStorage.getItem("player") === "one"
+                //alert "Player 2 have joined. Ready to start game?"
 
         //Game Result
         var playerOneHealthStatus = parseInt(data.players.playerOne.charHealth);
